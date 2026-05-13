@@ -1,0 +1,53 @@
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_BACKEND_BASE_API;
+const axiosInstance = axios.create({
+  baseURL: baseURL,
+  herders: {
+    "Content-Type": "application/jason",
+  },
+});
+
+//* REQUEST INTERCEPTOR
+axiosInstance.interceptors.request.use(
+  function (config) {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+    console.log(config);
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
+
+//*RESPONSE INTERCEPTION
+axiosInstance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  //*HANDLE FAILED RESPONSE
+  async function (error) {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest.retry) {
+      originalRequest.retry = true;
+      const refreshToken = localStorage.getItem("refreshToken");
+      try {
+        const response = await axiosInstance.post("/token/refresh/", {
+          refresh: refreshToken,
+        });
+        localStorage.setItem("accessToken", response.data.access);
+        originalRequest.headers["Autorization"] =
+          `Bearer ${response.data.access}`;
+        return axiosInstance;
+      } catch {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+export default axiosInstance;
