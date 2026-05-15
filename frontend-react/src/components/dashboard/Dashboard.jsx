@@ -87,7 +87,7 @@ const Dashboard = () => {
         {/* {Print Prediction Plot} */}
         {prediction && (
           <div className="prediction mt-5">
-            <div className="p-5">
+            <div className="p-3">
               {plot && <img src={plot} style={{ maxWidth: "100%" }} />}
             </div>
             <div className="p-3">
