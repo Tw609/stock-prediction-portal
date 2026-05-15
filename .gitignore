@@ -197,4 +197,5 @@ resources/*
 !resources/*.keras
 !resources/*stock_prediction_using_LSTM.ipynb
 
+
 # End of https://www.toptal.com/developers/gitignore/api/django,react
