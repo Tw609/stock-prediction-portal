@@ -190,4 +190,11 @@ sketch
 # VS Code
 .vscode/
 
+# ignore everything in resources
+resources/*
+
+# but keep .keras files
+!resources/*.keras
+!resources/*stock_prediction_using_LSTM.ipynb
+
 # End of https://www.toptal.com/developers/gitignore/api/django,react
