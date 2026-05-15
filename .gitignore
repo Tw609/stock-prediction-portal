@@ -139,6 +139,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+conda_env/
 
 # Spyder project settings
 .spyderproject
@@ -185,5 +186,8 @@ bower_components
 psd
 thumb
 sketch
+
+# VS Code
+.vscode/
 
 # End of https://www.toptal.com/developers/gitignore/api/django,react
